@@ -40,6 +40,10 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
+const message = ref("");
+const messageClass = ref("");
+const displayMessage = ref (false);
+
 onMounted(() => {
   getCsrfToken();
 });
@@ -72,7 +76,9 @@ function saveMovie() {
       return response.json();
     })
     .then(function (data) {
-      if (data.message) {
+      if (data.message === "Movie Successfully added") {
+        displayMessage.value = true;
+        message.value = "Moovie added successfully!";
         successMessage.value = data.message + ' - Title: ' + data.title;
         errorMessages.value = [];
         movieForm.reset();
